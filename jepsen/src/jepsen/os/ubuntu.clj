@@ -30,6 +30,11 @@
   (- (Long/parseLong (c/exec :date "+%s"))
      (Long/parseLong (c/exec :stat :-c "%Y" "/var/cache/apt/pkgcache.bin"))))
 
+(defn rmlocks!
+  "Remove any extant apt/dpkg locks"
+  []
+  (c/su (c/exec "rm -vf /var/lib/dpkg/lock /var/cache/apt/archives/lock")
+
 (defn update!
   "Apt-get update."
   []
@@ -80,13 +85,14 @@
   packages, passed as symbols, strings, or keywords, or, alternatively, a map
   of packages to version strings."
   [pkgs]
+  (rmlocks!)
   (if (map? pkgs)
     ; Install specific versions
     (dorun
       (for [[pkg version] pkgs]
         (when (not= version (installed-version pkg))
           (info "Installing" pkg version)
-          (c/exec :apt-get :install :-y :--force-yes
+          (c/exec :apt-get :install :-y
                   (str (name pkg) "=" version)))))
 
     ; Install any version
@@ -146,9 +152,6 @@
       (c/su
         ; Packages!
         (install [:wget
-                  :sysvinit-core
-                  :sysvinit
-                  :sysvinit-utils
                   :curl
                   :vim
                   :man-db
