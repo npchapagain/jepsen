@@ -11,7 +11,7 @@
                     [nemesis    :as nemesis]
                     [tests      :as tests]
                     [util       :refer [timeout]]]
-            [jepsen.os.debian   :as debian]
+            [jepsen.os.ubuntu   :as ubuntu]
             [knossos.model      :as model]))
 
 (defn zk-node-ids
@@ -42,7 +42,7 @@
     (setup! [_ test node]
       (c/su
         (info node "installing ZK" version)
-        (debian/install {:zookeeper version
+        (ubuntu/install {:zookeeper version
                          :zookeeper-bin version
                          :zookeeperd version})
 
@@ -105,7 +105,7 @@
   [version]
   (assoc tests/noop-test
          :name    "zookeeper"
-         :os      debian/os
+         :os      ubuntu/os
          :db      (db version)
          :client  (client nil nil)
          :nemesis (nemesis/partition-random-halves)
@@ -113,11 +113,12 @@
                          (gen/stagger 1)
                          (gen/nemesis
                            (gen/seq (cycle [(gen/sleep 5)
-                                            {:type :info, :f :start}
+                                           {:type :info, :f :start}
                                             (gen/sleep 5)
                                             {:type :info, :f :stop}])))
                          (gen/time-limit 60))
          :model   (model/cas-register 0)
          :checker (checker/compose
                     {:perf   (checker/perf)
-                     :linear checker/linearizable})))
+                     :linear checker/linearizable})
+         ))
