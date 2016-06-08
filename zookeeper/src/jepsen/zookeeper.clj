@@ -41,6 +41,14 @@
   (reify db/DB
     (setup! [_ test node]
       (c/su
+        (if (ubuntu/installed? :zookeeper)
+            (
+            (info node "found existing ZK, removing...")
+            (c/exec :service :zookeeper :stop)
+            (ubuntu/uninstall! :zookeeper)
+            (c/exec :rm :-rf
+                (c/lit "/var/lib/zookeeper/version-*")
+                (c/lit "/var/log/zookeeper/*"))))
         (info node "installing ZK" version)
         (ubuntu/install {:zookeeper version
                          :zookeeper-bin version
@@ -58,12 +66,14 @@
         (info node "ZK ready")))
 
     (teardown! [_ test node]
-      (info node "tearing down ZK")
       (c/su
+        (info node "tearing down ZK")
+        (ubuntu/uninstall! :zookeeper)
         (c/exec :service :zookeeper :stop)
         (c/exec :rm :-rf
                 (c/lit "/var/lib/zookeeper/version-*")
                 (c/lit "/var/log/zookeeper/*"))))
+
 
     db/LogFiles
     (log-files [_ test node]
