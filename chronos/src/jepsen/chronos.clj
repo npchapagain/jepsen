@@ -19,7 +19,7 @@
              [util :refer [timeout meh]]
              [mesosphere :as mesosphere]]
             [jepsen.control.util :as cu]
-            [jepsen.os.debian :as debian]
+            [jepsen.os.ubuntu :as ubuntu]
             [jepsen.chronos.checker :refer [checker epsilon-forgiveness]]))
 
 (def port "docs say 8080 but the package binds to 4400 by default wooo" 4400)
@@ -56,14 +56,14 @@
 (defn db
   "Sets up and tears down Chronos. You can get versions from
 
-      curl http://repos.mesosphere.com/debian/dists/wheezy/main/binary-amd64/Packages.bz2 | bunzip2 | egrep '^Package:|^Version:' | paste - - | sort"
+      curl http://repos.mesosphere.com/ubuntu/dists/wheezy/main/binary-amd64/Packages.bz2 | bunzip2 | egrep '^Package:|^Version:' | paste - - | sort"
   [mesos-version chronos-version]
   (let [mesosphere (mesosphere/db mesos-version)]
     (reify db/DB
       (setup! [_ test node]
         (db/setup! mesosphere test node)
 
-        (debian/install {:chronos chronos-version})
+        (ubuntu/install {:chronos chronos-version})
         (configure test node)
         (c/su (c/exec :mkdir :-p job-dir))
 
@@ -242,7 +242,7 @@
   [mesos-version chronos-version]
   (assoc tests/noop-test
          :name      "chronos"
-         :os        debian/os
+         :os        ubuntu/os
          :db        (db mesos-version chronos-version)
          :client    (->Client nil)
          :generator (gen/phases
