@@ -19,7 +19,7 @@
             [jepsen.checker.timeline :as timeline]
             [jepsen.control [net :as net]
              [util :as net/util]]
-            [jepsen.os.debian :as debian]
+            [jepsen.os.ubuntu :as ubuntu]
             [knossos.core :as knossos]
             [clojurewerkz.cassaforte.client :as cassandra]
             [clojurewerkz.cassaforte.query :refer :all]
@@ -128,13 +128,13 @@
                                            (gen/delay 1)
                                            (std-gen 250))
                                       (gen/conductor :replayer
-                                                     (gen/once {:type :info :f :replay}))
+                                                     (gen/once {:type :info :f :replay}) opts)
                                       (read-once)
                                       (->> (gen/clients (assocs -))
                                            (gen/delay 1)
                                            (std-gen 250))
                                       (gen/conductor :replayer
-                                                     (gen/once {:type :info :f :replay}))
+                                                     (gen/once {:type :info :f :replay}) opts)
                                       (read-once))
                           :checker (checker/compose
                                     {:map checker/associative-map})})
@@ -258,7 +258,7 @@
 ;; Uncontended tests
 (def bridge-test
   (mv-map-test "bridge"
-               {:conductors {:nemesis (nemesis/partitioner (comp nemesis/bridge shuffle))}}))
+             {:conductors {:nemesis (nemesis/partitioner (comp nemesis/bridge shuffle))}}))
 
 (def halves-test
   (mv-map-test "halves"
