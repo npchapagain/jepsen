@@ -17,7 +17,7 @@
                     [tests     :as tests]]
             [jepsen.control [net :as net]
                             [util :as net/util]]
-            [jepsen.os.debian :as debian]
+            [jepsen.os.ubuntu :as ubuntu]
             [knossos.core :as knossos])
   (:import (clojure.lang ExceptionInfo)
            (com.aerospike.client AerospikeClient
@@ -96,19 +96,19 @@
   "Installs aerospike on the given node."
   [node version]
   (when-not (= (str version "-1")
-               (debian/installed-version "aerospike-server-community"))
+               (ubuntu/installed-version "aerospike-server-community"))
                ; lol they don't package the same version of the tools
-               ; (debian/installed-version "aerospike-tools"))
-    (debian/install ["python"])
+               ; (ubuntu/installed-version "aerospike-tools"))
+    (ubuntu/install ["python"])
     (c/su
-      (debian/uninstall! ["aerospike-server-community" "aerospike-tools"])
+      (ubuntu/uninstall! ["aerospike-server-community" "aerospike-tools"])
       (info node "installing aerospike" version)
       (c/cd "/tmp"
             (c/exec :wget :-O "aerospike.tgz"
                     (str "http://www.aerospike.com/download/server/" version
-                         "/artifact/debian7"))
+                         "/artifact/ubuntu14"))
             (c/exec :tar :xvfz "aerospike.tgz"))
-      (c/cd (str "/tmp/aerospike-server-community-" version "-debian7")
+      (c/cd (str "/tmp/aerospike-server-community-" version "-ubuntu14.04")
             (c/exec :dpkg :-i (c/lit "aerospike-server-community-*.deb"))
             (c/exec :dpkg :-i (c/lit "aerospike-tools-*.deb")))
 
@@ -389,8 +389,8 @@
   [name opts]
   (merge tests/noop-test
          {:name    (str "aerospike " name)
-          :os      debian/os
-          :db      (db "3.5.4")
+          :os      ubuntu/os
+          :db      (db "3.8.3")
           :model   (model/cas-register)
           :checker (checker/compose {:linear checker/linearizable
                                      :perf (checker/perf)})
