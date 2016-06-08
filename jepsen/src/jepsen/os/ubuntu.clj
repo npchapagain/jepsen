@@ -7,7 +7,8 @@
             [jepsen.control :as c :refer [|]]
             [jepsen.control.util :as cu]
             [jepsen.control.net :as net]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [clojure.java.io :as io]))
 
 (defn setup-hostfile!
   "Makes sure the hostfile has a loopback entry for the local hostname"
@@ -33,7 +34,11 @@
 (defn rmlocks!
   "Remove any extant apt/dpkg locks"
   []
-  (c/su (c/exec "rm -vf /var/lib/dpkg/lock /var/cache/apt/archives/lock")
+  (c/su (if (.exists (io/file "/var/lib/dpkg/lock"))
+         (io/delete-file "/var/lib/dpkg/lock" true)
+        )
+        (if (.exists (io/file "rm -vf /var/cache/apt/archives/lock"))
+            (io/delete-file "/var/cache/apt/archives/lock" true))))
 
 (defn update!
   "Apt-get update."
