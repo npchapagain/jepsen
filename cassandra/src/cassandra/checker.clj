@@ -3,7 +3,8 @@
            [clojure.tools.logging :refer [debug info warn]]
            [jepsen.model :as model]
            [jepsen.checker.perf :as latency]
-           [knossos.core :as knossos])
+           [knossos.core :as knossos]
+           [knossos.model :as knoss-model])
   (:import jepsen.checker.Checker))
 
 (defn complete-rewrite-fold-op
@@ -92,15 +93,15 @@
        :inconsistent-op          evil-op
        :inconsistent-transitions (map (fn [w]
                                       [(:model w)
-                                       (-> w :model (knossos/step evil-op) :msg)])
+                                       (-> w :model (knoss-model/step evil-op) :msg)])
                                       worlds)})))
 
 (def enhanced-linearizable
   "A linearizability checker using Knossos that rewrites failed CAS operations
   to :read, since these are returned in Cassandra from failed LWT CAS"
   (reify Checker
-    (check [this test model history]
-      (enhanced-analysis model history))))
+    (check [this test model history opts]
+      (enhanced-analysis model history opts))))
 
 (defn ec-history->latencies
   [threshold]
