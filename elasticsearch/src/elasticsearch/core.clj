@@ -17,7 +17,7 @@
                     [tests     :as tests]]
             [jepsen.checker.timeline  :as timeline]
             [jepsen.control.net       :as net]
-            [jepsen.os.debian         :as debian]
+            [jepsen.os.ubuntu         :as ubuntu]
             [clj-http.client          :as http]
             [clojurewerkz.elastisch.rest          :as es]
             [clojurewerkz.elastisch.rest.admin    :as esa]
@@ -93,8 +93,8 @@
                 uri     (str "https://download.elasticsearch.org/"
                              "elasticsearch/elasticsearch/"
                              debfile)]
-            (when-not (= version (debian/installed-version "elasticsearch"))
-              (debian/uninstall! ["elasticsearch"])
+            (when-not (= version (ubuntu/installed-version "elasticsearch"))
+              (ubuntu/uninstall! ["elasticsearch"])
 
               (loop []
                 (info node "downloading elasticsearch")
@@ -109,7 +109,7 @@
                   (recur)))
 
               (info node "installing elasticsearch")
-              (debian/install ["openjdk-7-jre-headless"])
+              (ubuntu/install ["openjdk-7-jre-headless"])
               (c/exec :dpkg :-i :--force-confnew debfile))))))
 
 (defn configure!
@@ -394,7 +394,7 @@
   [name opts]
   (merge tests/noop-test
          {:name (str "elasticsearch " name)
-          :os   debian/os
+          :os   ubuntu/os
           :db   (db "1.5.0")}
          opts))
 
