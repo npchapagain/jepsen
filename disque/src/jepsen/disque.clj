@@ -19,7 +19,7 @@
                     [tests     :as tests]]
             [jepsen.control [net :as net]
                             [util :as cu]]
-            [jepsen.os.debian :as debian]
+            [jepsen.os.ubuntu :as ubuntu]
             [knossos.core :as knossos])
   (:import (clojure.lang ExceptionInfo)
            (java.net URI)
@@ -41,10 +41,10 @@
   "Installs DB on the given node."
   [node version]
   (info node "installing disque")
-  (debian/install [:git-core :build-essential])
+  (ubuntu/install [:git-core :build-essential])
   (c/su
     (c/cd "/opt"
-          (when-not (cu/file? "disque")
+          (when-not (cu/exists? "disque")
             (c/exec :git :clone "https://github.com/antirez/disque.git")))
     (c/cd dir
           (c/exec :git :pull)
@@ -300,7 +300,7 @@
   (merge tests/noop-test
          {:name    (str "disque " name)
           :client  (client)
-          :os      debian/os
+          :os      ubuntu/os
           :db      (db "f00dd0704128707f7a5effccd5837d796f2c01e3")
           :model   (model/unordered-queue)
           :generator (->> (gen/queue)
