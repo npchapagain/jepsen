@@ -20,7 +20,7 @@
             [jepsen.checker.timeline :as timeline]
             [jepsen.control [net :as net]
              [util :as net/util]]
-            [jepsen.os.debian :as debian]
+            [jepsen.os.ubuntu :as ubuntu]
             [knossos.core :as knossos]
             [clojurewerkz.cassaforte.client :as cassandra]
             [clojurewerkz.cassaforte.query :refer :all]
@@ -175,13 +175,13 @@
      :>> "/etc/apt/sources.list.d/webupd8team-java.list")
     (try (c/exec :apt-key :adv :--keyserver "hkp://keyserver.ubuntu.com:80"
                 :--recv-keys "EEA14886")
-         (debian/update!)
+         (ubuntu/update!)
          (catch RuntimeException e
            (info "Error updating caused by" e)))
     (c/exec :echo
             "debconf shared/accepted-oracle-license-v1-1 select true"
             | :debconf-set-selections)
-    (debian/install [:oracle-java8-installer]))))
+    (ubuntu/install [:oracle-java8-installer]))))
 
 (defn configure!
   "Uploads configuration files to the given node."
@@ -430,7 +430,7 @@
   [name opts]
   (merge tests/noop-test
          {:name    (str "cassandra " name)
-          :os      debian/os
+          :os      ubuntu/os
           :db      (db "2.1.8")
           :bootstrap (atom #{})
           :decommission (atom #{})}

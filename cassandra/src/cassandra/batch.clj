@@ -20,7 +20,7 @@
             [jepsen.checker.timeline :as timeline]
             [jepsen.control [net :as net]
              [util :as net/util]]
-            [jepsen.os.debian :as debian]
+            [jepsen.os.ubuntu :as ubuntu]
             [knossos.core :as knossos]
             [clojurewerkz.cassaforte.client :as cassandra]
             [clojurewerkz.cassaforte.query :refer :all]
