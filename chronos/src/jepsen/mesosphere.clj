@@ -12,7 +12,7 @@
                     [util :as util :refer [meh timeout]]
                     [zookeeper :as zk]]
             [jepsen.control.util :as cu]
-            [jepsen.os.debian :as debian]))
+            [jepsen.os.ubuntu :as ubuntu]))
 
 (def master-count "How many master nodes should we run?" 3)
 (def master-pidfile "/var/run/mesos/master.pid")
@@ -25,11 +25,11 @@
 
 (defn install!
   [test node version]
-  (debian/add-repo! :mesosphere
-                    "deb http://repos.mesosphere.io/debian wheezy main"
+  (ubuntu/add-repo! :mesosphere
+                    "deb http://repos.mesosphere.io/ubuntu wheezy main"
                     "keyserver.ubuntu.com"
                     "E56151BF")
-  (debian/install {:mesos version})
+  (ubuntu/install {:mesos version})
   (c/su
     (c/exec :mkdir :-p "/var/run/mesos")
     (c/exec :mkdir :-p master-dir)
