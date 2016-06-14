@@ -101,7 +101,7 @@
   to :read, since these are returned in Cassandra from failed LWT CAS"
   (reify Checker
     (check [this test model history opts]
-      (enhanced-analysis model history opts))))
+      (enhanced-analysis model history))))
 
 (defn ec-history->latencies
   [threshold]
