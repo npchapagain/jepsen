@@ -235,7 +235,7 @@
   [node test]
   (info node "starting Cassandra")
   (c/su
-   (c/exec (lit "~/cassandra/bin/cassandra"))))
+   (c/exec (lit "~/cassandra/bin/cassandra -R"))))
 
 (defn guarded-start!
   "Guarded start that only starts nodes that have joined the cluster already
@@ -431,7 +431,7 @@
   (merge tests/noop-test
          {:name    (str "cassandra " name)
           :os      ubuntu/os
-          :db      (db "2.1.8")
+          :db      (db "2.1.14")
           :bootstrap (atom #{})
           :decommission (atom #{})}
          opts))
