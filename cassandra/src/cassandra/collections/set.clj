@@ -111,7 +111,7 @@
                                       (read-once))
                           :checker (checker/compose
                                     {:set checker/set
-                                    :perf checker/perf})})
+                                    :perf (checker/perf)})})
          opts))
 
 (def bridge-test

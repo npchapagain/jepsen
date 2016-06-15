@@ -111,7 +111,7 @@
                                           std-gen)
                           :checker (checker/compose
                                     {:counter checker/counter
-                                    :perf checker/perf})})
+                                     :perf (checker/perf)})})
          opts))
 
 (defn cql-counter-inc-dec-test
@@ -125,7 +125,8 @@
                                           (gen/delay 1/10)
                                           std-gen)
                           :checker (checker/compose
-                                    {:counter checker/counter})})
+                                    {:counter checker/counter
+                                     :perf (checker/perf)})})
          opts))
 
 (def bridge-inc-test
