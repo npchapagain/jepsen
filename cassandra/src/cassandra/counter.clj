@@ -110,7 +110,8 @@
                                           (gen/delay 1/10)
                                           std-gen)
                           :checker (checker/compose
-                                    {:counter checker/counter})})
+                                    {:counter checker/counter
+                                    :perf checker/perf})})
          opts))
 
 (defn cql-counter-inc-dec-test

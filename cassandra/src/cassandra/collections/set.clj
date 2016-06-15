@@ -110,7 +110,8 @@
                                            std-gen)
                                       (read-once))
                           :checker (checker/compose
-                                    {:set checker/set})})
+                                    {:set checker/set
+                                    :perf checker/perf})})
          opts))
 
 (def bridge-test

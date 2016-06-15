@@ -154,7 +154,8 @@
                                             (gen/once {:type :info :f :bootstrapper}))
                                            gen/barrier))
                           :checker (checker/compose
-                                    {:linear extra-checker/enhanced-linearizable})})
+                                    {:perf (checker/perf)
+                                    :linear extra-checker/enhanced-linearizable})})
          opts))
 
 (def bridge-test

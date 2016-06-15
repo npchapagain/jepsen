@@ -123,7 +123,8 @@
                                       (gen/delay 65
                                                  (read-once)))
                           :checker (checker/compose
-                                    {:set checker/set})})
+                                    {:set checker/set
+                                    :perf checker/perf})})
          (merge-with merge {:conductors {:replayer (conductors/replayer)}} opts)))
 
 (def bridge-test
