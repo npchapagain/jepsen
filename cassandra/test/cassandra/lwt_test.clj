@@ -25,6 +25,7 @@
 (deftest ^:clock lwt-clock-drift
   (run-test! clock-drift-test))
 
+(comment
 ;; Bootstrapping tests
 (deftest ^:lwt ^:bootstrap lwt-bridge-bootstrap
   (run-test! bridge-test-bootstrap))
@@ -56,3 +57,4 @@
 
 (deftest ^:clock lwt-clock-drift-decommission
   (run-test! clock-drift-test-decommission))
+)
