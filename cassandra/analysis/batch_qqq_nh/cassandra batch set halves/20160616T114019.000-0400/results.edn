@@ -1,0 +1,15 @@
+{:set
+ {:valid? true,
+  :lost "#{}",
+  :recovered "#{75 156..157}",
+  :ok "#{0..1624}",
+  :recovered-frac 3/1625,
+  :unexpected-frac 0,
+  :unexpected "#{}",
+  :lost-frac 0,
+  :ok-frac 1},
+ :perf
+ {:latency-graph {:valid? true},
+  :rate-graph {:valid? true},
+  :valid? true},
+ :valid? true}

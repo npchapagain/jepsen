@@ -1,0 +1,248 @@
+{:perf
+ {:latency-graph {:valid? true},
+  :rate-graph {:valid? true},
+  :valid? true},
+ :linear
+ {:valid? true,
+  :linearizable-prefix
+  ({:type :invoke,
+    :f :cas,
+    :value [2 1],
+    :process 3,
+    :time 10958118766}
+   {:type :invoke, :f :read, :process 0, :time 10969086711, :value nil}
+   {:type :invoke,
+    :f :cas,
+    :value [4 1],
+    :process 2,
+    :time 11031075941}
+   {:type :ok, :f :read, :process 0, :time 11032921349, :value nil}
+   {:type :invoke,
+    :f :cas,
+    :value [4 1],
+    :process 1,
+    :time 11049093325}
+   {:type :fail, :f :cas, :value [2 1], :process 3, :time 11088559109}
+   {:type :fail, :f :cas, :value [4 1], :process 2, :time 11107186047}
+   {:type :invoke,
+    :f :cas,
+    :value [1 4],
+    :process 4,
+    :time 11108078796}
+   {:type :fail, :f :cas, :value [4 1], :process 1, :time 11121064599}
+   {:type :fail, :f :cas, :value [1 4], :process 4, :time 11137704754}
+   {:type :invoke, :f :write, :value 0, :process 4, :time 13307023161}
+   {:type :invoke, :f :read, :process 1, :time 13358419297, :value nil}
+   {:type :invoke,
+    :f :cas,
+    :value [1 4],
+    :process 3,
+    :time 13368868164}
+   {:type :ok, :f :read, :process 1, :time 13376974822, :value nil}
+   {:type :invoke,
+    :f :cas,
+    :value [1 4],
+    :process 0,
+    :time 13395272959}
+   {:type :fail, :f :cas, :value [1 4], :process 3, :time 13433565413}
+   {:type :fail, :f :cas, :value [1 4], :process 0, :time 13455749892}
+   {:type :invoke, :f :read, :process 2, :time 13481590563, :value nil}
+   {:type :ok, :f :read, :process 2, :time 13485474242, :value nil}
+   {:type :info, :f :stop, :process :nemesis, :time 13787964910}
+   {:type :info, :f :stop, :process :nemesis, :time 13788095627}
+   {:type :ok, :f :write, :value 0, :process 4, :time 13804225938}
+   {:type :invoke, :f :write, :value 4, :process 1, :time 15388353939}
+   {:type :invoke,
+    :f :cas,
+    :value [4 1],
+    :process 3,
+    :time 15511884336}
+   {:type :invoke, :f :read, :value 1, :process 2, :time 15548851971}
+   {:type :ok, :f :write, :value 4, :process 1, :time 15584898389}
+   {:type :invoke, :f :read, :value 4, :process 0, :time 15590139673}
+   {:type :ok, :f :read, :value 4, :process 0, :time 15668019983}
+   {:type :invoke, :f :read, :process 4, :time 15824508142, :value 1}
+   {:type :ok, :f :cas, :value [4 1], :process 3, :time 15907862341}
+   {:type :ok, :f :read, :process 4, :time 16290272163, :value 1}
+   {:type :ok, :f :read, :value 1, :process 2, :time 16452544395}
+   {:type :invoke, :f :read, :process 0, :time 17702405807, :value 1}
+   {:type :ok, :f :read, :process 0, :time 17777340604, :value 1}
+   {:type :invoke, :f :write, :value 3, :process 1, :time 17889246854}
+   {:type :invoke, :f :read, :value 3, :process 3, :time 18004231482}
+   {:type :ok, :f :write, :value 3, :process 1, :time 18156221039}
+   {:type :ok, :f :read, :value 3, :process 3, :time 18311806866}
+   {:type :invoke, :f :read, :value 3, :process 4, :time 18331562347}
+   {:type :ok, :f :read, :value 3, :process 4, :time 18454919858}
+   {:type :invoke, :f :read, :process 2, :time 18640854644, :value 3}
+   {:type :ok, :f :read, :process 2, :time 18645768410, :value 3}
+   {:type :invoke, :f :read, :value 3, :process 0, :time 19863637679}
+   {:type :ok, :f :read, :value 3, :process 0, :time 19902890088}
+   {:type :invoke, :f :write, :value 0, :process 1, :time 20221602026}
+   {:type :ok, :f :write, :value 0, :process 1, :time 20394972161}
+   {:type :invoke, :f :write, :value 0, :process 4, :time 20500211134}
+   {:type :invoke, :f :read, :process 3, :time 20639102844, :value 0}
+   {:type :ok, :f :read, :process 3, :time 20735528539, :value 0}
+   {:type :ok, :f :write, :value 0, :process 4, :time 20743733353}
+   {:type :invoke, :f :read, :value 0, :process 2, :time 20893058920}
+   {:type :ok, :f :read, :value 0, :process 2, :time 20929743733}
+   {:type :invoke, :f :write, :value 4, :process 0, :time 22039305253}
+   {:type :ok, :f :write, :value 4, :process 0, :time 22141433580}
+   {:type :invoke, :f :read, :value 4, :process 1, :time 22550314678}
+   {:type :ok, :f :read, :value 4, :process 1, :time 22580835492}
+   {:type :invoke, :f :read, :process 3, :time 22968898376, :value 4}
+   {:type :ok, :f :read, :process 3, :time 22972741546, :value 4}
+   {:type :invoke, :f :read, :value 4, :process 4, :time 23031102657}
+   {:type :ok, :f :read, :value 4, :process 4, :time 23076007354}
+   {:type :invoke, :f :write, :value 4, :process 2, :time 23099096663}
+   {:type :ok, :f :write, :value 4, :process 2, :time 23183260963}
+   {:type :info, :f :start, :process :nemesis, :time 23788322773}
+   {:type :info, :f :start, :process :nemesis, :time 23788419953}
+   {:type :invoke, :f :read, :process 0, :time 24148787155, :value 4}
+   {:type :ok, :f :read, :process 0, :time 24152436827, :value 4}
+   {:type :invoke, :f :read, :value 4, :process 1, :time 24978174879}
+   {:type :invoke, :f :read, :value 4, :process 3, :time 25037091825}
+   {:type :ok, :f :read, :value 4, :process 1, :time 25046175980}
+   {:type :ok, :f :read, :value 4, :process 3, :time 25114932474}
+   {:type :invoke, :f :read, :value 4, :process 4, :time 25228320820}
+   {:type :ok, :f :read, :value 4, :process 4, :time 25273100203}
+   {:type :invoke, :f :write, :value 4, :process 2, :time 25316518592}
+   {:type :ok, :f :write, :value 4, :process 2, :time 25519635895}
+   {:type :invoke, :f :write, :value 3, :process 0, :time 26451819630}
+   {:type :ok, :f :write, :value 3, :process 0, :time 26569718369}
+   {:type :invoke, :f :write, :value 4, :process 3, :time 27238369590}
+   {:type :ok, :f :write, :value 4, :process 3, :time 27351963650}
+   {:type :invoke, :f :read, :value 4, :process 1, :time 27356476938}
+   {:type :ok, :f :read, :value 4, :process 1, :time 27381121166}
+   {:type :invoke, :f :read, :value 4, :process 4, :time 27659462977}
+   {:type :ok, :f :read, :value 4, :process 4, :time 27681874210}
+   {:type :invoke, :f :write, :value 4, :process 2, :time 27901960966}
+   {:type :ok, :f :write, :value 4, :process 2, :time 27968311401}
+   {:type :info, :f :stop, :process :nemesis, :time 28788584771}
+   {:type :info, :f :stop, :process :nemesis, :time 28788681542}
+   {:type :invoke, :f :read, :value 4, :process 0, :time 28928025360}
+   {:type :ok, :f :read, :value 4, :process 0, :time 28966758887}
+   {:type :invoke, :f :read, :process 3, :time 29360293452, :value 4}
+   {:type :ok, :f :read, :process 3, :time 29364739664, :value 4}
+   {:type :invoke, :f :write, :value 3, :process 1, :time 29505405034}
+   {:type :ok, :f :write, :value 3, :process 1, :time 29666260575}
+   {:type :invoke,
+    :f :cas,
+    :value [3 4],
+    :process 4,
+    :time 30050283184}
+   {:type :invoke, :f :read, :process 2, :time 30088588412, :value 3}
+   {:type :ok, :f :read, :process 2, :time 30093724349, :value 3}
+   {:type :ok, :f :cas, :value [3 4], :process 4, :time 30123448822}),
+  :worlds
+  ({:model {:value 4},
+    :fixed
+    [{:type :invoke,
+      :f :read,
+      :process 0,
+      :time 10969086711,
+      :value nil}
+     {:type :invoke,
+      :f :write,
+      :value 0,
+      :process 4,
+      :time 13307023161}
+     {:type :invoke,
+      :f :read,
+      :process 1,
+      :time 13358419297,
+      :value nil}
+     {:type :invoke,
+      :f :read,
+      :process 2,
+      :time 13481590563,
+      :value nil}
+     {:type :invoke,
+      :f :write,
+      :value 4,
+      :process 1,
+      :time 15388353939}
+     {:type :invoke, :f :read, :value 4, :process 0, :time 15590139673}
+     {:type :invoke,
+      :f :cas,
+      :value [4 1],
+      :process 3,
+      :time 15511884336}
+     {:type :invoke, :f :read, :process 4, :time 15824508142, :value 1}
+     {:type :invoke, :f :read, :value 1, :process 2, :time 15548851971}
+     {:type :invoke, :f :read, :process 0, :time 17702405807, :value 1}
+     {:type :invoke,
+      :f :write,
+      :value 3,
+      :process 1,
+      :time 17889246854}
+     {:type :invoke, :f :read, :value 3, :process 3, :time 18004231482}
+     {:type :invoke, :f :read, :value 3, :process 4, :time 18331562347}
+     {:type :invoke, :f :read, :process 2, :time 18640854644, :value 3}
+     {:type :invoke, :f :read, :value 3, :process 0, :time 19863637679}
+     {:type :invoke,
+      :f :write,
+      :value 0,
+      :process 1,
+      :time 20221602026}
+     {:type :invoke,
+      :f :write,
+      :value 0,
+      :process 4,
+      :time 20500211134}
+     {:type :invoke, :f :read, :process 3, :time 20639102844, :value 0}
+     {:type :invoke, :f :read, :value 0, :process 2, :time 20893058920}
+     {:type :invoke,
+      :f :write,
+      :value 4,
+      :process 0,
+      :time 22039305253}
+     {:type :invoke, :f :read, :value 4, :process 1, :time 22550314678}
+     {:type :invoke, :f :read, :process 3, :time 22968898376, :value 4}
+     {:type :invoke, :f :read, :value 4, :process 4, :time 23031102657}
+     {:type :invoke,
+      :f :write,
+      :value 4,
+      :process 2,
+      :time 23099096663}
+     {:type :invoke, :f :read, :process 0, :time 24148787155, :value 4}
+     {:type :invoke, :f :read, :value 4, :process 1, :time 24978174879}
+     {:type :invoke, :f :read, :value 4, :process 3, :time 25037091825}
+     {:type :invoke, :f :read, :value 4, :process 4, :time 25228320820}
+     {:type :invoke,
+      :f :write,
+      :value 4,
+      :process 2,
+      :time 25316518592}
+     {:type :invoke,
+      :f :write,
+      :value 3,
+      :process 0,
+      :time 26451819630}
+     {:type :invoke,
+      :f :write,
+      :value 4,
+      :process 3,
+      :time 27238369590}
+     {:type :invoke, :f :read, :value 4, :process 1, :time 27356476938}
+     {:type :invoke, :f :read, :value 4, :process 4, :time 27659462977}
+     {:type :invoke,
+      :f :write,
+      :value 4,
+      :process 2,
+      :time 27901960966}
+     {:type :invoke, :f :read, :value 4, :process 0, :time 28928025360}
+     {:type :invoke, :f :read, :process 3, :time 29360293452, :value 4}
+     {:type :invoke,
+      :f :write,
+      :value 3,
+      :process 1,
+      :time 29505405034}
+     {:type :invoke, :f :read, :process 2, :time 30088588412, :value 3}
+     {:type :invoke,
+      :f :cas,
+      :value [3 4],
+      :process 4,
+      :time 30050283184}],
+    :pending #{},
+    :index 96})},
+ :valid? true}
