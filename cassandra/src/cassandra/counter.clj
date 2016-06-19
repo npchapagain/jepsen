@@ -125,7 +125,7 @@
                                           (gen/delay 1/10)
                                           std-gen)
                           :checker (checker/compose
-                                    {:counter checker/counter
+                                    {:counter checker/inc-dec-counter
                                      :perf (checker/perf)})})
          opts))
 
