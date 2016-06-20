@@ -1,0 +1,84 @@
+2	:invoke	:read	nil
+1	:invoke	:cas	[0 0]
+3	:invoke	:cas	[0 0]
+4	:invoke	:cas	[1 4]
+0	:invoke	:read	nil
+0	:ok	:read	nil
+1	:fail	:cas	nil
+2	:ok	:read	nil
+3	:fail	:cas	nil
+4	:fail	:cas	nil
+3	:invoke	:cas	[3 4]
+0	:invoke	:read	nil
+2	:invoke	:write	1
+1	:invoke	:cas	[0 3]
+4	:invoke	:write	1
+:nemesis	:info	:stop	nil
+:nemesis	:info	:stop	nil
+0	:ok	:read	nil
+3	:fail	:cas	nil
+1	:fail	:cas	nil
+4	:ok	:write	1
+0	:invoke	:write	3
+3	:invoke	:write	3
+1	:invoke	:read	nil
+2	:info	:write	:write-timed-out
+0	:info	:write	:write-timed-out
+3	:info	:write	:write-timed-out
+4	:invoke	:cas	[0 1]
+1	:fail	:read	:timed-out
+4	:fail	:cas	1
+7	:invoke	:cas	[0 2]
+7	:fail	:cas	1
+5	:invoke	:cas	[2 3]
+5	:fail	:cas	1
+8	:invoke	:cas	[3 1]
+8	:fail	:cas	1
+1	:invoke	:write	0
+1	:ok	:write	0
+4	:invoke	:read	nil
+4	:ok	:read	0
+7	:invoke	:read	nil
+7	:ok	:read	0
+5	:invoke	:read	nil
+8	:invoke	:cas	[3 1]
+5	:ok	:read	0
+8	:fail	:cas	0
+1	:invoke	:cas	[4 1]
+1	:fail	:cas	0
+4	:invoke	:cas	[4 4]
+4	:fail	:cas	0
+:nemesis	:info	:start	nil
+:nemesis	:info	:start	nil
+7	:invoke	:cas	[0 0]
+7	:ok	:cas	[0 0]
+5	:invoke	:cas	[2 3]
+5	:fail	:cas	0
+8	:invoke	:cas	[4 2]
+8	:fail	:cas	0
+1	:invoke	:cas	[2 4]
+1	:fail	:cas	0
+4	:invoke	:cas	[1 0]
+4	:fail	:cas	0
+7	:invoke	:cas	[2 4]
+7	:fail	:cas	0
+5	:invoke	:cas	[0 3]
+5	:ok	:cas	[0 3]
+8	:invoke	:cas	[4 0]
+8	:fail	:cas	3
+1	:invoke	:cas	[4 2]
+1	:fail	:cas	3
+4	:invoke	:read	nil
+4	:ok	:read	3
+:nemesis	:info	:stop	nil
+:nemesis	:info	:stop	nil
+7	:invoke	:cas	[0 2]
+7	:fail	:cas	3
+5	:invoke	:cas	[1 3]
+5	:fail	:cas	3
+8	:invoke	:cas	[1 3]
+8	:fail	:cas	3
+1	:invoke	:cas	[0 2]
+1	:fail	:cas	3
+4	:invoke	:write	4
+4	:ok	:write	4
