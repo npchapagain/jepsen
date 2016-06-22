@@ -26,3 +26,5 @@ For all tests,  `_h/hints` and `_nh/nohints` indicate that [hinted_handoff](http
 *Collection tests* and *Counter* test have no associated tuning parameters.
 
 <sub>*Other possible values used but not currently published: `any` for ANY `2` for TWO. They may appear here at a future point.</sub>
+
+**Slides** have been upload as `demo.pdf` or may be found on slideshare: http://bit.ly/28N7rUn
