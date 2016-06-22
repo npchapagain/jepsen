@@ -27,4 +27,16 @@ For all tests,  `_h/hints` and `_nh/nohints` indicate that [hinted_handoff](http
 
 <sub>*Other possible values used but not currently published: `any` for ANY `2` for TWO. They may appear here at a future point.</sub>
 
-**Slides** have been uploaded as `demo.pdf`. They may be found on slideshare: http://bit.ly/28N7rUn
+### Code changes
+A majority of code changes involved merging the aphyr and riptano repos. Notable changes are linked for convenience:
+- [cassandra/batch.clj](https://github.com/nps/jepsen/blame/master/cassandra/src/cassandra/batch.clj)
+- [cassandra/checker.clj](https://github.com/nps/jepsen/blame/master/cassandra/src/cassandra/checker.clj)
+- [cassandra/core.clj](https://github.com/nps/jepsen/blame/master/cassandra/src/cassandra/core.clj)
+- [cassandra/counter.clj](https://github.com/nps/jepsen/blame/master/cassandra/src/cassandra/counter.clj)
+- [cassandra/lwt.clj](https://github.com/nps/jepsen/blame/master/cassandra/src/cassandra/lwt.clj)
+- [jepsen/checker.clj](https://github.com/nps/jepsen/blame/master/jepsen/src/jepsen/checker.clj)
+- [jepsen/os/ubuntu.clj](https://github.com/nps/jepsen/blame/master/jepsen/src/jepsen/os/ubuntu.clj)
+
+
+### Slides
+Have been uploaded as `demo.pdf`. They may be found on slideshare: http://bit.ly/28N7rUn
