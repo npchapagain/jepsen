@@ -50,16 +50,16 @@
                           (column-definitions {:id :int
                                                :count :counter
                                                :primary-key [:id]})
-                          (with {:compaction
-                                 {:class (compaction-strategy)}}))
+                          (with {:compact-storage true})
+                                 )
         (cql/update conn "counters" {:count (increment-by 0)}
                     (where [[= :id 0]]))
         (->CQLCounterClient conn writec))))
   (invoke! [this test op]
     (case (:f op)
       :add (try (do
-                  (with-retry-policy FallthroughRetryPolicy/INSTANCE
-                    (with-consistency-level writec
+                  (:rety-policy :instance
+                    (:consistency-level writec
                       (cql/update conn
                                   "counters"
                                   {:count (increment-by (:value op))}
@@ -73,8 +73,8 @@
                   (info "All the servers are down - waiting 2s")
                   (Thread/sleep 2000)
                   (assoc op :type :fail :error (.getMessage e))))
-      :read (try (let [value (->> (with-retry-policy FallthroughRetryPolicy/INSTANCE
-                                    (with-consistency-level ConsistencyLevel/ALL
+      :read (try (let [value (->> (:retry-policy :instance
+                                    (:consistency-level :all
                                       (cql/select conn
                                                   "counters"
                                                   (where [[= :id 0]]))))
@@ -96,7 +96,7 @@
 
 (defn cql-counter-client
   "A counter implemented using CQL counters"
-  ([] (->CQLCounterClient nil ConsistencyLevel/ONE))
+  ([] (->CQLCounterClient nil :one))
   ([writec] (->CQLCounterClient nil writec)))
 
 (defn cql-counter-inc-test

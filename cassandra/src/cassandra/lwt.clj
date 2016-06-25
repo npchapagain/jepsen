@@ -55,8 +55,8 @@
                           (column-definitions {:id :int
                                                :value :int
                                                :primary-key [:id]})
-                          (with {:compaction
-                                 {:class (compaction-strategy)}}))
+                          (with {:compact-storage true}) 
+                          )
         (->CasRegisterClient conn))))
   (invoke! [this test op]
     (case (:f op)
@@ -101,7 +101,7 @@
                     (info "All the servers are down - waiting 2s")
                     (Thread/sleep 2000)
                     (assoc op :type :fail :error (.getMessage e))))
-      :read (try (let [value (->> (with-consistency-level ConsistencyLevel/SERIAL
+      :read (try (let [value (->> (:consistency-level :quorum
                                     (cql/select conn "lwt"
                                                 (where [[= :id 0]])))
                                   first :value)]

@@ -52,25 +52,24 @@
                           (column-definitions {:id :int
                                                :value :int
                                                :primary-key [:id]})
-                          (with {:compaction
-                                 {:class (compaction-strategy)}}))
+                          (with {:compact-storage true}))
         (cql/create-table conn "b"
                           (if-not-exists)
                           (column-definitions {:id :int
                                                :value :int
                                                :primary-key [:id]})
-                          (with {:compaction
-                                 {:class (compaction-strategy)}}))
+                          (with {:compact-storage true}))
         (->BatchSetClient conn))))
   (invoke! [this test op]
     (case (:f op)
       :add (try (let [value (:value op)]
-                  (with-consistency-level ConsistencyLevel/QUORUM
-                    (cql/atomic-batch conn (queries
-                                            (insert-query "a" {:id value
-                                                               :value value})
-                                            (insert-query "b" {:id (- value)
-                                                               :value value})))))
+                  (->> (:consistency-level :any
+                    (cassandra/execute conn (unlogged-batch (queries 
+                                            (insert "a"
+                                            {:id value
+                                                              :value value})
+                                         (insert "b" {:id (- value)
+                                                               :value value})))))))
                 (assoc op :type :ok)
                 (catch UnavailableException e
                   (assoc op :type :fail :value (.getMessage e)))
@@ -80,16 +79,17 @@
                   (info "All nodes are down - sleeping 2s")
                   (Thread/sleep 2000)
                   (assoc op :type :fail :value (.getMessage e))))
-      :read (try (let [value-a (->> (with-retry-policy aggressive-read
-                                      (with-consistency-level ConsistencyLevel/ALL
+      :read (try (let [value-a (->> (:retry-policy :aggressive-read
+                                      (:consistency-level :any
                                         (cql/select conn "a")))
                                     (map :value)
                                     (into (sorted-set)))
-                       value-b (->> (with-retry-policy aggressive-read
-                                      (with-consistency-level ConsistencyLevel/ALL
+                       value-b (->> (:retry-policy aggressive-read
+                                      (:consistency-level :any
                                         (cql/select conn "b")))
                                     (map :value)
                                     (into (sorted-set)))]
+                   (info value-a)
                    (if-not (= value-a value-b)
                      (assoc op :type :fail :value [value-a value-b])
                      (assoc op :type :ok :value value-a)))

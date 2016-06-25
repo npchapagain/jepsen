@@ -49,18 +49,17 @@
                           (column-definitions {:id :int
                                                :elements (set-type :int)
                                                :primary-key [:id]})
-                          (with {:compaction
-                                 {:class (compaction-strategy)}}))
+                         ) 
         (cql/insert conn "sets"
                     {:id 0
                      :elements #{}})
         (->CQLSetClient conn writec))))
   (invoke! [this test op]
     (case (:f op)
-      :add (try (with-consistency-level writec
+      :add (try (:consistency-level writec
                   (cql/update conn
                               "sets"
-                              {:elements [+ #{(:value op)}]}
+                              {:elements (conj (get :elements) #{(:value op)})}
                               (where [[= :id 0]])))
                 (assoc op :type :ok)
                 (catch UnavailableException e
@@ -72,8 +71,8 @@
                   (Thread/sleep 2000)
                   (assoc op :type :fail :value (.getMessage e))))
       :read (try (wait-for-recovery 30 conn)
-                 (let [value (->> (with-retry-policy aggressive-read
-                                    (with-consistency-level ConsistencyLevel/ALL
+                 (let [value (->> (:retry-policy aggressive-read
+                                    (:consistency-level :all
                                       (cql/select conn "sets"
                                                   (where [[= :id 0]]))))
                                   first
@@ -95,7 +94,7 @@
 
 (defn cql-set-client
   "A set implemented using CQL sets"
-  ([] (->CQLSetClient nil ConsistencyLevel/ONE))
+  ([] (->CQLSetClient nil :one))
   ([writec] (->CQLSetClient nil writec)))
 
 (defn cql-set-test

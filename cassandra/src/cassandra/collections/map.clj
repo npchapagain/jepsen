@@ -49,15 +49,14 @@
                           (column-definitions {:id :int
                                                :elements (map-type :int :int)
                                                :primary-key [:id]})
-                          (with {:compaction
-                                 {:class (compaction-strategy)}}))
+                          )
         (cql/insert conn "maps"
                     {:id 0
                      :elements {}})
         (->CQLMapClient conn writec))))
   (invoke! [this test op]
     (case (:f op)
-      :add (try (with-consistency-level writec
+      :add (try (:consistency-level writec
                   (cql/update conn
                               "maps"
                               {:elements [+ {(:value op) (:value op)}]}
@@ -72,8 +71,8 @@
                   (Thread/sleep 2000)
                   (assoc op :type :fail :value (.getMessage e))))
       :read (try (wait-for-recovery 30 conn)
-                 (let [value (->> (with-retry-policy aggressive-read
-                                    (with-consistency-level ConsistencyLevel/ALL
+                 (let [value (->> (:retry-policy aggressive-read
+                                    (:consistency-level :all
                                       (cql/select conn "maps"
                                                   (where [[= :id 0]]))))
                                   first
@@ -92,7 +91,7 @@
 
 (defn cql-map-client
   "A set implemented using CQL maps"
-  ([] (->CQLMapClient nil ConsistencyLevel/ONE))
+  ([] (->CQLMapClient nil :one))
   ([writec] (->CQLMapClient nil writec)))
 
 (defn cql-map-test
