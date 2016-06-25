@@ -9,7 +9,8 @@
                  [clojurewerkz/cassaforte "2.1.0-beta1"]
                  [com.codahale.metrics/metrics-core "3.0.2"]]
   :profiles {:dev {:plugins [[test2junit "1.1.1"]]}
-             :trunk {:dependencies [[clojurewerkz/cassaforte "trunk-SNAPSHOT"]]}}
+             :trunk {:dependencies [[clojurewerkz/cassaforte "3.0.0-alpha2-SNAPSHOT"]
+  [org.clojure/tools.nrepl "0.2.11"]]}}
   :test-selectors {:steady :steady
                    :bootstrap :bootstrap
                    :map :map
