@@ -25,6 +25,9 @@ For all tests,  `_h/hints` and `_nh/nohints` indicate that [hinted_handoff](http
 
 *Collection tests* and *Counter* test have no associated tuning parameters.
 
+##### A note on counter tests for Cassandra 3.6
+As for this writing, the results of counter tests for C* 3.6 are indeterminate. It was observed that *all* counter tests were failing. In detail, the read values were often `nil` and when valid numbers, always fell well outside the valid window.  As a control, I re-ran these tests without introducing an nemesis and discovered the same behavior. Given this, no conclusion should be drawn. My lead hypothesis is a compatibilty issue with the underlying clojure CQL clients, but I've yet had the chance to explore this matter in depth.
+
 <sub>*Other possible values used but not currently published: `any` for ANY `2` for TWO. They may appear here at a future point.</sub>
 
 ### Code changes
